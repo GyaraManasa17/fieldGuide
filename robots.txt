@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://example.com/vla-wam-field-guide/sitemap.xml

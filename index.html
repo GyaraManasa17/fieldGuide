@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Embodied AI Field Guide — VLA &amp; WAM Reference</title>
+<meta name="description" content="A field guide to 52 Vision-Language-Action (VLA) and World Action Model (WAM) systems for robotics — with a guided advisor to help you pick the right one for your hardware, experience level, and project.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://example.com/vla-wam-field-guide/">
+
+<!-- Open Graph / Facebook / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Embodied AI Field Guide — VLA & WAM Reference">
+<meta property="og:description" content="52 Vision-Language-Action and World Action Model systems, mapped by lineage — with a guided advisor to help you pick one for your project.">
+<meta property="og:image" content="assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://example.com/vla-wam-field-guide/">
+<meta property="og:site_name" content="VLA / WAM Field Guide">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Embodied AI Field Guide — VLA & WAM Reference">
+<meta name="twitter:description" content="52 Vision-Language-Action and World Action Model systems, mapped by lineage — with a guided advisor to help you pick one for your project.">
+<meta name="twitter:image" content="assets/og-image.png">
+
+<meta name="theme-color" content="#081C33">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="mark"></span>Field Guide<small>VLA / WAM Reference</small></div>
+    <nav class="topnav">
+      <a href="#glossary">Glossary</a>
+      <a href="#path">Learning Path</a>
+      <a href="#advisor">Model Advisor</a>
+      <a href="#explorer">Explorer</a>
+      <a href="#lineage">Lineage</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">● verified as of july 2026</span>
+    <h1>Teaching robots to <em>see</em>, <em>read</em>, and <em>act</em> — mapped, in one place.</h1>
+    <p class="lede">A field guide to Vision-Language-Action (VLA) models and World Action Models (WAM): the systems letting robots follow plain-language instructions instead of hand-coded routines. 52 systems, plotted by lineage, cross-referenced to their papers, code, and weights — plus a guided advisor to help you pick one.</p>
+    <div class="hero-cta">
+      <a href="#advisor" class="btn primary">Help me pick a model →</a>
+      <a href="#start" class="btn">I'm new here</a>
+      <a href="#explorer" class="btn">Browse the full directory</a>
+    </div>
+  </div>
+  <div class="timeline wrap">
+    <div class="timeline-label"><span>Research timeline — first appearance by year</span><span id="tl-count">52 systems</span></div>
+    <div class="timeline-track" id="timeline"></div>
+  </div>
+</header>
+
+<section id="glossary">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">01 — Orientation</span><h2>Three letters, three letters, and a question</h2></div>
+    </div>
+    <p class="section-sub">Before the model directory, the vocabulary. Every entry in this guide is one of these, or a system built from them.</p>
+    <div class="glossary-grid">
+      <div class="gterm">
+        <span class="g-tag">VLM</span>
+        <h3>Vision-Language Model</h3>
+        <p>Understands images and text together — can describe a scene or answer questions about it. No robot body, no actions. Think of it as the "eyes and reading comprehension" that VLAs are often built on top of.</p>
+        <div class="g-example">e.g. the backbone inside OpenVLA, PaliGemma inside π0</div>
+      </div>
+      <div class="gterm">
+        <span class="g-tag">VLA</span>
+        <h3>Vision-Language-Action Model</h3>
+        <p>A VLM extended to output robot actions — joint angles, gripper commands, end-effector poses — instead of just words. Give it a camera feed and an instruction like "pick up the red block," and it predicts what the robot should do next.</p>
+        <div class="g-example">e.g. RT-2, OpenVLA, π0, SmolVLA, Gemini Robotics</div>
+      </div>
+      <div class="gterm">
+        <span class="g-tag">WAM</span>
+        <h3>World Action Model</h3>
+        <p>Goes one step further: predicts what the world will look like <em>after</em> an action, not just the action itself. Used to imagine outcomes before acting, or to train on video without needing real robot data for every scenario.</p>
+        <div class="g-example">e.g. DreamZero, Cosmos Policy, Genie 3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="glossary2" style="padding-top:0;">
+  <div class="wrap">
+    <div class="glossary-grid">
+      <div class="gterm">
+        <span class="g-tag">World Model?</span>
+        <h3>Does it imagine the future?</h3>
+        <p>Explicitly learns or generates future environment states, video frames, or physical-state representations conditioned on actions — not just semantic knowledge picked up during pretraining.</p>
+      </div>
+      <div class="gterm">
+        <span class="g-tag">Predictive?</span>
+        <h3>Does it forecast consequences?</h3>
+        <p>Explicitly predicts future observations, states, or consequences beyond the immediate next action — a broader category than "world model."</p>
+      </div>
+      <div class="gterm">
+        <span class="g-tag">Planner?</span>
+        <h3>Does it choose between futures?</h3>
+        <p>Evaluates, searches, optimizes, or selects among predicted rollouts. High-level reasoning alone doesn't count — a model must actually weigh alternatives to earn this tag.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">02 — Orientation</span><h2>If you read three entries, read these</h2></div>
+    </div>
+    <p class="section-sub">The field has 52 systems in this guide. These three cover the throughline — a closed pre-VLA baseline, the model that opened the field up, and where the state of the art sits today.</p>
+    <div class="start-grid" id="start-grid"></div>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">03 — Learning Path</span><h2>A suggested route through the field</h2></div>
+    </div>
+    <p class="section-sub">Not a rigid syllabus — a reasonable order to explore 52 models in, if you're building context from scratch. Each stage links straight to the relevant spec sheets.</p>
+    <div class="path-track" id="path-track"></div>
+  </div>
+</section>
+
+<section id="advisor">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">04 — Model Advisor</span><h2>Which model should you actually use?</h2></div>
+    </div>
+    <p class="section-sub">Answer five short questions about your background, hardware, and priorities. The advisor scores every candidate model against your actual answers — real difficulty ratings, real compute requirements, real license status — and explains why each match fits.</p>
+    <div class="wizard" id="wizard-host"></div>
+  </div>
+</section>
+
+<section id="explorer">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">05 — Directory</span><h2>The full directory</h2></div>
+      <div class="mono" style="font-size:12px;color:var(--ink-dim);">click a card to open · ★ to favorite · + to compare</div>
+    </div>
+    <div class="explorer-controls">
+      <div class="search-box">
+        <span class="mono" style="color:var(--ink-dim);">⌕</span>
+        <input id="search" type="text" placeholder="Search by name, org, or capability…">
+      </div>
+      <select id="sort-select" class="sort-select">
+        <option value="year-desc">Newest first</option>
+        <option value="year-asc">Oldest first</option>
+        <option value="name-asc">Name (A–Z)</option>
+        <option value="difficulty-asc">Difficulty (easy first)</option>
+      </select>
+      <button type="button" id="copy-view-link" class="btn">⎘ Copy link to this view</button>
+    </div>
+    <div class="explorer-controls" id="chips"></div>
+    <div class="facet-row" id="facets"></div>
+    <div class="result-count" id="result-count"></div>
+    <div class="card-grid" id="card-grid"></div>
+  </div>
+</section>
+
+<section id="lineage">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">06 — Lineage</span><h2>How these models actually connect</h2></div>
+    </div>
+    <p class="section-sub">Solid arrows are direct successors — same lab, same family, explicitly built on the prior model. Dashed arrows are cross-family influence — a documented idea, method, or design pattern that carried over. Every connection here is stated in the model's own entry, not inferred.</p>
+    <div id="lineage-host"></div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="tag">07 — Architecture Patterns</span><h2>Three shapes almost everything here fits into</h2></div>
+    </div>
+    <p class="section-sub">Simplified, general diagrams — the specifics vary model to model (see each spec sheet for details), but most systems in this guide follow one of these three shapes.</p>
+    <div class="diagram-grid">
+
+      <div class="diagram-card">
+        <h4>1. The VLA pipeline</h4>
+        <div class="dsub">RT-2, OpenVLA, π0, SmolVLA, Gemini Robotics — the core action loop almost every VLA in this guide follows.</div>
+        <svg viewBox="0 0 780 210" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"></path>
+            </marker>
+            <marker id="arrow-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--violet)"></path>
+            </marker>
+          </defs>
+          <rect class="dbox" x="14" y="70" width="132" height="70" rx="2"></rect>
+          <text class="dtext" x="80" y="98" text-anchor="middle">Camera image</text>
+          <text class="dtext" x="80" y="116" text-anchor="middle">+ instruction</text>
+
+          <path class="dline" d="M146,105 L206,105"></path>
+
+          <rect class="dbox-teal" x="210" y="55" width="180" height="100" rx="2"></rect>
+          <text class="dtext" x="300" y="98" text-anchor="middle">Vision-Language</text>
+          <text class="dtext" x="300" y="116" text-anchor="middle">Backbone (VLM)</text>
+          <text class="dtext-dim" x="300" y="136" text-anchor="middle">e.g. PaliGemma, Llama 2, Gemini</text>
+
+          <path class="dline" d="M390,105 L450,105"></path>
+
+          <rect class="dbox-accent" x="454" y="55" width="160" height="100" rx="2"></rect>
+          <text class="dtext" x="534" y="98" text-anchor="middle">Action head</text>
+          <text class="dtext" x="534" y="116" text-anchor="middle">/ decoder</text>
+          <text class="dtext-dim" x="534" y="136" text-anchor="middle">tokens, flow-matching, etc.</text>
+
+          <path class="dline" d="M614,105 L674,105"></path>
+
+          <rect class="dbox" x="678" y="70" width="90" height="70" rx="2"></rect>
+          <text class="dtext" x="723" y="98" text-anchor="middle">Robot</text>
+          <text class="dtext" x="723" y="116" text-anchor="middle">action</text>
+
+          <path class="dline" d="M723,140 C723,190 80,190 80,140" fill="none"></path>
+          <text class="dtext-dim" x="400" y="205" text-anchor="middle">loop: new camera frame after every action</text>
+        </svg>
+      </div>
+
+      <div class="diagram-card">
+        <h4>2. The WAM predict-before-acting loop</h4>
+        <div class="dsub">DreamZero, Cosmos Policy, Genie 3 — the extra step that separates a World Action Model from a plain VLA.</div>
+        <svg viewBox="0 0 780 220" xmlns="http://www.w3.org/2000/svg">
+          <rect class="dbox" x="14" y="75" width="140" height="70" rx="2"></rect>
+          <text class="dtext" x="84" y="103" text-anchor="middle">Current state</text>
+          <text class="dtext" x="84" y="121" text-anchor="middle">+ candidate action</text>
+
+          <path class="dline" d="M154,110 L214,110"></path>
+
+          <rect class="dbox-amber" x="218" y="60" width="170" height="100" rx="2"></rect>
+          <text class="dtext" x="303" y="103" text-anchor="middle">World Model</text>
+          <text class="dtext-dim" x="303" y="121" text-anchor="middle">generates future</text>
+          <text class="dtext-dim" x="303" y="137" text-anchor="middle">frames/states</text>
+
+          <path class="dline" d="M388,110 L448,110"></path>
+
+          <rect class="dbox" x="452" y="60" width="170" height="100" rx="2"></rect>
+          <text class="dtext" x="537" y="98" text-anchor="middle">Predicted future</text>
+          <text class="dtext" x="537" y="116" text-anchor="middle">state(s)</text>
+          <text class="dtext-dim" x="537" y="136" text-anchor="middle">one or several rollouts</text>
+
+          <path class="dline" d="M622,110 L682,110"></path>
+
+          <rect class="dbox-accent" x="686" y="75" width="90" height="70" rx="2"></rect>
+          <text class="dtext" x="731" y="103" text-anchor="middle">Chosen</text>
+          <text class="dtext" x="731" y="121" text-anchor="middle">action</text>
+
+          <path class="dline" d="M731,145 C731,195 84,195 84,145" fill="none"></path>
+          <text class="dtext-dim" x="400" y="215" text-anchor="middle">only some WAMs also search/evaluate rollouts — that step alone earns the "Planner" tag</text>
+        </svg>
+      </div>
+
+      <div class="diagram-card">
+        <h4>3. The two-system (System 2 / System 1) pattern</h4>
+        <div class="dsub">GR00T N1 and Helix independently converged on the same split — slow reasoning feeding fast control.</div>
+        <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg">
+          <rect class="dbox" x="14" y="65" width="150" height="80" rx="2"></rect>
+          <text class="dtext" x="89" y="98" text-anchor="middle">Camera</text>
+          <text class="dtext" x="89" y="116" text-anchor="middle">+ instruction</text>
+
+          <path class="dline" d="M164,105 L224,105"></path>
+
+          <rect class="dbox-teal" x="228" y="40" width="200" height="130" rx="2"></rect>
+          <text class="dtext" x="328" y="80" text-anchor="middle">System 2</text>
+          <text class="dtext-dim" x="328" y="98" text-anchor="middle">VLM reasoning</text>
+          <text class="dtext-dim" x="328" y="114" text-anchor="middle">scene + language</text>
+          <text class="dtext-dim" x="328" y="130" text-anchor="middle">understanding</text>
+          <text class="dtext-dim" x="328" y="150" text-anchor="middle">~5–10 Hz</text>
+
+          <path class="dline" d="M428,105 L488,105"></path>
+          <text class="dtext-dim" x="458" y="95" text-anchor="middle">latent</text>
+
+          <rect class="dbox-accent" x="492" y="40" width="200" height="130" rx="2"></rect>
+          <text class="dtext" x="592" y="80" text-anchor="middle">System 1</text>
+          <text class="dtext-dim" x="592" y="98" text-anchor="middle">fast visuomotor</text>
+          <text class="dtext-dim" x="592" y="114" text-anchor="middle">control</text>
+          <text class="dtext-dim" x="592" y="150" text-anchor="middle">~100–200 Hz</text>
+
+          <path class="dline" d="M692,105 L742,105"></path>
+
+          <rect class="dbox" x="746" y="75" width="60" height="60" rx="2"></rect>
+          <text class="dtext-dim" x="776" y="102" text-anchor="middle">robot</text>
+          <text class="dtext-dim" x="776" y="117" text-anchor="middle">action</text>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Field Guide — VLA / WAM Reference · information verified as of July 2026</span>
+    <span>Not exhaustive — a map of major, representative systems</span>
+  </div>
+</footer>
+
+<div class="compare-bar" id="compare-bar"></div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
