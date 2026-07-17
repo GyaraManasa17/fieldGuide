@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.com/vla-wam-field-guide/sitemap.xml
+Sitemap: https://gyaramanasa17.github.io/fieldGuide/sitemap.xml
